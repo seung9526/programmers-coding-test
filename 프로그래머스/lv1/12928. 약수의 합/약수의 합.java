@@ -8,4 +8,9 @@ class Solution {
         }
         return answer;
     }
+    
+    public void main(String[] args) {
+        Solution s = new Solution();
+        System.out.print(s.solution(6));
+    }
 }
