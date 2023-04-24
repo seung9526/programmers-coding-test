@@ -1,71 +1,106 @@
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-
-public class Main{
-    static HashMap<String, Integer> map;
-	static int ans1 = 0;
-	static String ans2 = "";
+public class Main {
+	static HashMap<String, Integer> map;
 	public static void main(String[] args) throws IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		String A[] = in.readLine().split("");
-		String B[] = in.readLine().split("");
-		map = new HashMap<String, Integer>();
-		map.put("I", 1);
-		map.put("IV", 4);
-		map.put("V", 5);
-		map.put("IX", 9);
-		map.put("X", 10);
-		map.put("XL", 40);
-		map.put("L", 50);
-		map.put("XC", 90);
-		map.put("C", 100);
-		map.put("CD", 400);
-		map.put("D", 500);
-		map.put("CM", 900);
-		map.put("M", 1000);
-		makeNum(A);
-		makeNum(B);
-		makeString(ans1);
-		System.out.println(ans1);
-		System.out.println(ans2);
-	}
-	
-	private static void makeString(int num) {
-		List<Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
-		list.sort(Entry.comparingByValue(Collections.reverseOrder()));
-		while(num != 0) {
-			int quo = 0;
-			for (Entry<String, Integer> entry : list) {
-				quo = num/entry.getValue();
-				if(quo != 0) {
-					for (int i = 0; i < quo; i++) {
-						ans2 += entry.getKey();
-					}
-					num = num%entry.getValue();
-					break;
-				}
-			}
-		}
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		map = new HashMap<>(){{
+			put("I", 1);
+			put("IV", 4);
+			put("V", 5);
+			put("IX", 9);
+			put("X", 10);
+			put("XL", 40);
+			put("L", 50);
+			put("XC", 90);
+			put("C", 100);
+			put("CD", 400);
+			put("D", 500);
+			put("CM", 900);
+			put("M", 1000);
+		}};
+
+		String A[] = br.readLine().split("");
+		String B[] = br.readLine().split("");
+		int sum = getNum(A)+getNum(B);
+		String sumRom = getRoman(sum);
+		System.out.println(sum);
+		System.out.println(sumRom);
 	}
 
-	private static void makeNum(String[] arr) {
-		for (int i = 0; i < arr.length; i++) {
-			char c = arr[i].charAt(0);
-			if ((c == 'I' || c == 'X' || c == 'C') && i < arr.length - 1) {
-				String s = arr[i] + arr[i + 1];
-				if (map.containsKey(s)) {
-					ans1 += map.get(s);
+	static int getNum(String S[]) {
+		int res = 0;
+		for(int i=0;i<S.length;i++) {
+			char c = S[i].charAt(0);
+			if((c=='I'||c=='X'||c=='C')&&i<S.length-1) {
+				String temp = S[i]+S[i+1];
+				if(map.containsKey(temp)) {
+					res += map.get(temp);
 					i++;
 					continue;
 				}
 			}
-			ans1 += map.get(arr[i]);
-		}		
+			res += map.get(S[i]);
+		}
+		return res;
+	}
+
+	static String getRoman(int N) {
+		StringBuilder sb = new StringBuilder();
+		while(N >= 1000) {
+			sb.append("M");
+			N -= 1000;
+		}
+		if(N >= 900) {
+			sb.append("CM");
+			N -= 900;
+		}
+		if(N >= 500) {
+			sb.append("D");
+			N -= 500;
+		}
+		if(N >= 400) {
+			sb.append("CD");
+			N -= 400;
+		}
+		while(N >= 100) {
+			sb.append("C");
+			N -= 100;
+		}
+		if(N >= 90) {
+			sb.append("XC");
+			N -= 90;
+		}
+		if(N >= 50) {
+			sb.append("L");
+			N -= 50;
+		}
+		if(N >= 40) {
+			sb.append("XL");
+			N -= 40;
+		}
+		while(N >= 10) {
+			sb.append("X");
+			N -= 10;
+		}
+		if(N >= 9) {
+			sb.append("IX");
+			N -= 9;
+		}
+		if(N >= 5) {
+			sb.append("V");
+			N -= 5;
+		}
+		if(N >= 4) {
+			sb.append("IV");
+			N -= 4;
+		}
+		while(N >= 1) {
+			sb.append("I");
+			N -= 1;
+		}
+		return sb.toString();
 	}
 }
