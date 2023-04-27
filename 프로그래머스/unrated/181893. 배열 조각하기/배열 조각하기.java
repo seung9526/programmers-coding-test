@@ -15,6 +15,8 @@ class Solution {
             }
         }
         
+        if(start>end) return new int[]{-1};
+        
         return Arrays.copyOfRange(arr, start, end+1);
     }
 }
