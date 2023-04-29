@@ -5,10 +5,10 @@ class Solution {
         
         Arrays.sort(n);
         
-        int num = n[0] * n[1];
-        int num1 = n[n.length-1] * n[n.length-2];
+        int minus = n[0] * n[1];
+        int max = n[n.length-1] * n[n.length-2];
         
-        return num>num1 ? num : num1;
+        return minus>max ? minus : max;
         
     }
 }
