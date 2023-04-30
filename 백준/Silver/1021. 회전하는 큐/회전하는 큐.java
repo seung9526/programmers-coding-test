@@ -19,26 +19,23 @@ public class Main {
 		
 		st = new StringTokenizer(br.readLine());
 		
-		int[] temp = new int[M];
-		for(int i = 0 ; i < M ; i++)
-			temp[i] = Integer.parseInt(st.nextToken());
-		
-		// 필요한 변수
-		// 일단 뽑아낼 원소의 위치가 left가 빠른지 right가 빠른지 판별하는 것
-		// 아마도 q.size 절반보다 작으면 left 아니면 right가 빠르다.
-		// 그걸로 보내주면 끝
-		for(int i = 1 ; i <= N ; i++)
+		int[] tmp = new int[M];
+		for(int i = 0 ; i < M ; i++){
+			tmp[i] = Integer.parseInt(st.nextToken());
+        }
+
+		for(int i = 1 ; i <= N ; i++){
 			q.add(i);
-		
+        }
 		for(int i = 0 ; i < M ; i++) {
 			
-			if(check(temp[i])) {
-				while(temp[i]!=q.get(0)) {
+			if(check(tmp[i])) {
+				while(tmp[i]!=q.get(0)) {
 				q.addLast(q.pollFirst());
 				count++;
 				}
 			}else {
-				while(temp[i]!=q.get(0)) {
+				while(tmp[i]!=q.get(0)) {
 				q.addFirst(q.pollLast());
 				count++;
 				}
