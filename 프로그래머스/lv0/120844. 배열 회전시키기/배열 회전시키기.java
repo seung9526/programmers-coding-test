@@ -1,19 +1,22 @@
+import java.util.*;
+
 class Solution {
-    public int[] solution(int[] numbers, String direction) {
-        if (direction.equals("right")) {
-            int temp = numbers[numbers.length - 1];
-            for (int i = numbers.length - 2; i >= 0; i--) {
-                numbers[i + 1] = numbers[i];
-            }
-            numbers[0] = temp;
-            return numbers;
-        } else {
-            int temp = numbers[0];
-            for (int i = 0; i <= numbers.length - 2; i++) {
-                numbers[i] = numbers[i + 1];
-            }
-            numbers[numbers.length - 1] = temp;
-            return numbers;
+    public ArrayList solution(int[] numbers, String direction) {
+        ArrayList<Integer> answer = new ArrayList<>();
+
+        for(int i=0; i<numbers.length; i++){
+            answer.add(numbers[i]);
         }
+
+        if(direction.equals("right")){
+            answer.add(0, numbers[numbers.length-1]);
+            answer.remove(answer.size()-1);
+
+        }else if(direction.equals("left")){
+            answer.add(numbers[0]);
+            answer.remove(0);
+        }
+
+        return answer;
     }
 }
