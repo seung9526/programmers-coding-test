@@ -1,61 +1,43 @@
 import java.util.*;
-import java.io.*;
 
 public class Main {
+public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        Deque<Integer> deque = new LinkedList<>();
+        int[] arr = new int[m];
+        int cnt = 0;
 
-	static int N, M;
-	static StringBuilder sb = new StringBuilder();
-	static int count = 0;
-	static LinkedList<Integer> q = new LinkedList<>();
-	
-	public static void main(String[] args) throws IOException {
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-		
-		st = new StringTokenizer(br.readLine());
-		
-		int[] tmp = new int[M];
-		for(int i = 0 ; i < M ; i++){
-			tmp[i] = Integer.parseInt(st.nextToken());
+        for (int i = 1; i <= n; i++) {
+            deque.add(i);
         }
 
-		for(int i = 1 ; i <= N ; i++){
-			q.add(i);
+        for (int i = 0; i < m; i++) {
+            arr[i] = sc.nextInt();
         }
-		for(int i = 0 ; i < M ; i++) {
-			
-			if(check(tmp[i])) {
-				while(tmp[i]!=q.get(0)) {
-				q.addLast(q.pollFirst());
-				count++;
-				}
-			}else {
-				while(tmp[i]!=q.get(0)) {
-				q.addFirst(q.pollLast());
-				count++;
-				}
-			}
-			
-			q.poll();
-		}
 
-		
-		System.out.println(count);
+        for (int i = 0; i < m; i++) {
+            int index = ((LinkedList<Integer>) deque).indexOf(arr[i]);
+            int size = deque.size();
 
-		}
-	public static boolean check(int a) {
-		
-		for(int i = 0 ; i <= q.size()/2 ; i++) {
-			if(a == q.get(i))
-				return true;
-		}
-		
-		return false;
-	}
+            if (deque.peekFirst() == arr[i]) {
+                deque.pollFirst();
+            } else if (index <= size / 2) {
+                for (int j = 0; j < index; j++) {
+                    deque.addLast(deque.pollFirst());
+                    cnt++;
+                }
+                deque.pollFirst();
+            } else {
+                for (int j = 0; j < size - index; j++) {
+                    deque.addFirst(deque.pollLast());
+                    cnt++;
+                }
+                deque.pollFirst();
+            }
+        }
 
+        System.out.println(cnt);
+    }
 }
