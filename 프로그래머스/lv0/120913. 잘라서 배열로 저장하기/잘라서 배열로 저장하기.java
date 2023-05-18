@@ -1,18 +1,23 @@
+import java.util.*;
+
 class Solution {
     public String[] solution(String my_str, int n) {
-        int cnt =(my_str.length() + n - 1) /n;
-        String[] answer = new String[cnt];
+        List<String> list = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
         
-        for(int i=0; i<cnt; i++){
-            int start = n*i;
-            int end = 0;
-            if(start + n >=my_str.length()){
-                end = my_str.length();
-            } else {
-                end = start + n;
+        for (char ch : my_str.toCharArray()){
+            sb.append(ch);
+            
+            if(sb.length() == n){
+                list.add(sb.toString());
+                sb = new StringBuilder();
             }
-            answer[i] = my_str.substring(start, end);
         }
-        return answer;
+        
+        if(sb.length()>0){
+            list.add(sb.toString());
+        }
+        
+        return list.toArray(new String[0]);
     }
 }
