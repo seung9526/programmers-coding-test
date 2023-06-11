@@ -1,13 +1,13 @@
 import java.util.*;
 
 class Solution {
-    public List solution(int n, int k) {
-        List<Integer> answer = new ArrayList<>();
+    public int[] solution(int n, int k) {
+        List<Integer> list = new ArrayList<>();
         
         for(int i=1; k*i<=n; i++){
-            answer.add(k*i);
+            list.add(k*i);
         }
         
-        return answer;
+        return list.stream().mapToInt(Integer::intValue).toArray();
     }
 }
