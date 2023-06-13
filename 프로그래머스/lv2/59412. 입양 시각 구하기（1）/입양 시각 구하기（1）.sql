@@ -1,2 +1,4 @@
 -- 코드를 입력하세요
-SELECT HOUR(DATETIME) as HOUR, count(DATETIME) from ANIMAL_OUTS group by HOUR(DATETIME) HAVING HOUR>=9 and HOUR<=19 order by HOUR;
+SELECT
+    extract(hour from cast(DATETIME as timestamp)) as hour, count(*) as count from ANIMAL_OUTS 
+    where extract(hour from cast(DATETIME as timestamp)) between 9 and 19 group by extract(hour from cast(DATETIME as timestamp)) order by hour
