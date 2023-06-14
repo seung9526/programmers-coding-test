@@ -2,7 +2,11 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] arr, int divisor) {
-        int[] answer = {};
+        int[] answer = Arrays.stream(arr).filter(test -> test%divisor==0).sorted().toArray();
+        if(answer.length==0){
+            answer = new int[] {-1};
+        }
+        /*
         List<Integer> list = new ArrayList<>();
         
         for(int i=0;i<arr.length;i++){
@@ -22,7 +26,7 @@ class Solution {
         }
         
         Arrays.sort(answer);
-        
+        */
         return answer;
     }
 }
