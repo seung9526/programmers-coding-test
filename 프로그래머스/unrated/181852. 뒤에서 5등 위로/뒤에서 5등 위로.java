@@ -2,6 +2,7 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] num_list) {
+        /*
         List<Integer> list = new ArrayList<>();
         Arrays.sort(num_list);
         
@@ -12,5 +13,7 @@ class Solution {
         return list.stream()
                 .mapToInt(i -> i)
                 .toArray();
+        */
+        return Arrays.stream(num_list).sorted().skip(5).toArray();
     }
 }
