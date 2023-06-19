@@ -7,6 +7,6 @@ class Solution {
             list.add(num_list[i]);                
         }
         
-        return list.stream().mapToInt(i -> i).toArray();
+        return list.stream().mapToInt(Integer::intValue).toArray();
     }
 }
