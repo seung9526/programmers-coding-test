@@ -2,18 +2,12 @@ import java.util.*;
 
 class Solution {
     public String[] solution(String[] names) {
-        List<String> list = new ArrayList<>();
-       
-        while (names.length > 0) {
-            int groupSize = Math.min(5, names.length);
-            String[] group = Arrays.copyOfRange(names, 0, groupSize);
-                
-                list.add(group[0]);
-                names = Arrays.copyOfRange(names, groupSize, names.length);
-        }
-
-        String[] answer = list.toArray(new String[0]);
+        ArrayList<String> answer = new ArrayList();
+        for(int i=0, j=0; i<names.length; i+= 5, j++) {
+            answer.add(names[i]);
+            }
         
-        return answer;
+        String[] str = answer.toArray(new String[0]);
+        return str;
     }
 }
