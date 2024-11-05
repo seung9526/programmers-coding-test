@@ -1,21 +1,28 @@
 class Solution {
     fun solution(n: Int, times: IntArray): Long {
+        val m = times.size
         var left = 1L
-        var right = n * times.maxOrNull()!!.toLong() // 최대 시간은 n명의 사람이 가장 느린 심사관에게만 심사를 받는 경우
+        var right = n * times.maxOrNull()!!.toLong()
+        var result = right
 
-        while (left < right) {
+        while (left <= right) {
             val mid = (left + right) / 2
             
-            // mid 시간 동안 처리할 수 있는 사람 수 계산
-            val processed = times.sumOf { mid / it }
-            
-            if (processed < n) {
-                left = mid + 1 // 처리할 수 있는 사람이 부족하면 시간을 늘림
+            // mid 시간 동안 처리할 수 있는 총 인원 수 계산
+            var processedPeople = 0L
+            for (time in times) {
+                processedPeople += mid / time
+                if (processedPeople >= n) break // 더 이상 계산할 필요 없음
+            }
+
+            if (processedPeople >= n) {
+                result = mid // 처리 가능한 인원이 충분하므로 시간을 줄인다
+                right = mid - 1
             } else {
-                right = mid // 충분히 처리할 수 있으면 시간을 줄여봄
+                left = mid + 1 // 처리 가능한 인원이 부족하므로 시간을 늘린다
             }
         }
-
-        return left // left가 최솟값
+        
+        return result
     }
 }
