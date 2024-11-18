@@ -1,24 +1,17 @@
 function solution(N, stages) {
-    let stageCounts = Array(N + 1).fill(0);
-    stages.forEach(stage => {
-        if (stage <= N) {
-            stageCounts[stage]++;
-        }
-    });
-    
-    let total = stages.length;
-    let failRate = [];
-    
-    for(let i = 1; i <= N; i++) {
-        if(total === 0) {
-            failRate.push([i, 0]);
-        } else {
-            failRate.push([i, stageCounts[i] / total]);
-            total -= stageCounts[i];
-        }
+    const result = [];
+    let totalPlayers = stages.length;
+
+    for (let stage = 1; stage <= N; stage++) {
+        const notCleared = stages.filter(playerStage => playerStage === stage).length;
+
+        const failRate = totalPlayers === 0 ? 0 : notCleared / totalPlayers;
+
+        result.push([stage, failRate]);
+        totalPlayers -= notCleared;
     }
-    
-    failRate.sort((a, b)  => b[1] - a[1] || a[0] - b[0]);
-    
-    return failRate.map(rate => rate[0]);
+
+    result.sort((a, b) => b[1] - a[1] || a[0] - b[0]);
+
+    return result.map(([stage, _]) => stage);
 }
