@@ -16,7 +16,7 @@ func solution() {
         graph[B].append((A, C))
     }
 
-    // **탐색 순서 최적화: 간선 정렬 (가중치가 작은 순)**
+    // **탐색 순서 최적화: 간선 정렬**
     for i in 0..<N {
         graph[i].sort { $0.1 < $1.1 }
     }
@@ -28,7 +28,7 @@ func solution() {
     queue.reserveCapacity(N)
     queue.append((0, 0))
     
-    var queueIndex = 0
+    var queueIndex = 0  // **deque처럼 사용 (O(1) pop)**
 
     while queueIndex < queue.count {
         let (current, currentCost) = queue[queueIndex]
@@ -45,9 +45,9 @@ func solution() {
             }
         }
 
-        // **배열 접근 최적화 (메모리 재할당 최소화)**
+        // **배열 크기가 커지면 한 번에 정리 (O(1) 복사)**
         if queueIndex > 1000 {
-            queue.removeFirst(queueIndex)
+            queue = Array(queue[queueIndex...]) // **빠른 슬라이싱**
             queueIndex = 0
         }
     }
