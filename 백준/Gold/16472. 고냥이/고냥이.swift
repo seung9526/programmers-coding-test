@@ -1,39 +1,33 @@
 func solution() {
     let N = Int(readLine()!)!
-    let translator = readLine()!.map { String ($0) }
-    
-    var alphabetCount = Array(repeating: 0, count: 26) // a~z
-    var count = 0 
-    
-    var result = 0
+    let translator = readLine()!.map { String($0) }
 
-    var left = 0 
+    var left = 0
     var right = 0
 
-    alphabetCount[Int(translator[left].unicodeScalars.first!.value) - 97] += 1
-    count += 1
-    
-    while right < translator.count - 1 {
-        right += 1
-        
-        let rightIndex = Int(translator[right].unicodeScalars.first!.value) - 97
-        alphabetCount[rightIndex] += 1
-        
-        if alphabetCount[rightIndex] == 1 { 
-            count += 1
-        }
-        
-        while count > N {
-            let leftIndex = Int(translator[left].unicodeScalars.first!.value) - 97
-            alphabetCount[leftIndex] -= 1
-            if alphabetCount[leftIndex] == 0 {
-                count -= 1
+    var result = 0
+    var visited = Set<String>()
+    var charCount = [String: Int]()
+
+    while right < translator.count {
+        let char = translator[right]
+        charCount[char, default: 0] += 1
+        visited.insert(char)
+
+        while visited.count > N {
+            let leftChar = translator[left]
+            charCount[leftChar]! -= 1
+            if charCount[leftChar]! == 0 {
+                charCount.removeValue(forKey: leftChar)
+                visited.remove(leftChar)
             }
             left += 1
         }
-        
-        result = max(result, right-left+1)
+
+        result = max(result, right - left + 1)
+        right += 1
     }
+
     print(result)
 }
 
